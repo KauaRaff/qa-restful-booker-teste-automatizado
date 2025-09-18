@@ -12,6 +12,7 @@ Antes de rodar os testes, você precisa ter instalado:
 - [Python 3.x](https://www.python.org/)
 - [Robot Framework](https://robotframework.org/)
 - Bibliotecas necessárias: RequestsLibrary e Collections
+- O código está no doc "src"
 
 ## Test Cases
 
