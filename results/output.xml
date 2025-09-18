@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.13.7 on win32)" generated="2025-09-18T11:43:43.104783" rpa="false" schemaversion="5">
+<suite id="s1" name="Qa-Restful-Booker" source="C:\Users\kauar\OneDrive\Área de Trabalho\qa-restful-booker">
+<suite id="s1-s1" name="Src" source="C:\Users\kauar\OneDrive\Área de Trabalho\qa-restful-booker\src">
+<suite id="s1-s1-s1" name="Booker Test" source="C:\Users\kauar\OneDrive\Área de Trabalho\qa-restful-booker\src\booker_test.robot">
+<test id="s1-s1-s1-t1" name="POST Create Booking" line="27">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-09-18T11:43:43.452997" level="INFO">Creating Session using : alias=booker, url=https://restful-booker.herokuapp.com, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>booker</arg>
+<arg>https://restful-booker.herokuapp.com</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-09-18T11:43:43.452443" elapsed="0.001277"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-09-18T11:43:43.455773" level="INFO">${booking_dates} = {'checkin': '2025-09-20', 'checkout': '2025-09-25'}</msg>
+<var>${booking_dates}</var>
+<arg>checkin=2025-09-20</arg>
+<arg>checkout=2025-09-25</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-09-18T11:43:43.454783" elapsed="0.001314"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-09-18T11:43:43.457616" level="INFO">${booking_data} = {'firstname': 'Kaua', 'lastname': 'Silva', 'totalprice': '123', 'depositpaid': True, 'bookingdates': {'checkin': '2025-09-20', 'checkout': '2025-09-25'}, 'additionalneeds': 'Breakfast'}</msg>
+<var>${booking_data}</var>
+<arg>firstname=Kaua</arg>
+<arg>lastname=Silva</arg>
+<arg>totalprice=123</arg>
+<arg>depositpaid=${True}</arg>
+<arg>bookingdates=${booking_dates}</arg>
+<arg>additionalneeds=Breakfast</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-09-18T11:43:43.456643" elapsed="0.001323"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-09-18T11:43:44.130040" level="INFO">POST Request : url=https://restful-booker.herokuapp.com/booking 
+ path_url=/booking 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '185', 'Content-Type': 'application/json'} 
+ body=b'{"firstname": "Kaua", "lastname": "Silva", "totalprice": "123", "depositpaid": true, "bookingdates": {"checkin": "2025-09-20", "checkout": "2025-09-25"}, "additionalneeds": "Breakfast"}' 
+ </msg>
+<msg time="2025-09-18T11:43:44.130965" level="INFO">POST Response : url=https://restful-booker.herokuapp.com/booking 
+ status=200, reason=OK 
+ headers={'Content-Length': '198', 'Content-Type': 'application/json; charset=utf-8', 'Date': 'Thu, 18 Sep 2025 14:43:44 GMT', 'Etag': 'W/"c6-oqUuLNh0iNGeDqAg85yA6SsdMfA"', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=oyulhxVVHzekEFgAh%2BFhrZS5drxf2Twf6Ah7%2ByYpZ14%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1758206624"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=oyulhxVVHzekEFgAh%2BFhrZS5drxf2Twf6Ah7%2ByYpZ14%3D&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;ts=1758206624"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body={"bookingid":1323,"booking":{"firstname":"Kaua","lastname":"Silva","totalprice":123,"depositpaid":true,"bookingdates":{"checkin":"2025-09-20","checkout":"2025-09-25"},"additionalneeds":"Breakfast"}} 
+ </msg>
+<msg time="2025-09-18T11:43:44.131432" level="INFO">C:\Users\kauar\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'restful-booker.herokuapp.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2025-09-18T11:43:44.132763" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>booker</arg>
+<arg>/booking</arg>
+<arg>json=${booking_data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-09-18T11:43:43.458380" elapsed="0.674939"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${response.status_code} == 200 or ${response.status_code} == 201</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2025-09-18T11:43:44.134210" elapsed="0.002447"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Booking criado: ${response.json()}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-09-18T11:43:44.137464" elapsed="0.001739"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-09-18T11:43:44.141575" level="INFO">${booking_id} = 1323</msg>
+<var>${booking_id}</var>
+<arg>${response.json()['bookingid']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-09-18T11:43:44.140120" elapsed="0.001827"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>ID do booking criado: ${booking_id}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-09-18T11:43:44.143007" elapsed="0.001245"/>
+</kw>
+<doc>Este teste cria um novo booking usando POST com automacao</doc>
+<status status="PASS" start="2025-09-18T11:43:43.446880" elapsed="0.698370"/>
+</test>
+<status status="PASS" start="2025-09-18T11:43:43.174667" elapsed="0.984134"/>
+</suite>
+<status status="PASS" start="2025-09-18T11:43:43.164826" elapsed="1.003914"/>
+</suite>
+<status status="PASS" start="2025-09-18T11:43:43.111802" elapsed="1.066119"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Qa-Restful-Booker" id="s1" pass="1" fail="0" skip="0">Qa-Restful-Booker</stat>
+<stat name="Src" id="s1-s1" pass="1" fail="0" skip="0">Qa-Restful-Booker.Src</stat>
+<stat name="Booker Test" id="s1-s1-s1" pass="1" fail="0" skip="0">Qa-Restful-Booker.Src.Booker Test</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
